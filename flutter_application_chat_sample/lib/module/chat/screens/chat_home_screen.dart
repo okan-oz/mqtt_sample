@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_chat_sample/settings_mqtt_screen.dart';
+import 'package:flutter_application_chat_sample/module/mqtt/screens/settings_mqtt_screen.dart';
 
-import 'mqtt/chat_screen.dart';
-import 'mqtt/mqtt_manager_1.dart';
+import 'chat_screen.dart';
+import '../../mqtt/utils/mqtt_manager_1.dart';
 
 class ChatHomeScreen extends StatefulWidget {
   ChatHomeScreen({Key? key}) : super(key: key);

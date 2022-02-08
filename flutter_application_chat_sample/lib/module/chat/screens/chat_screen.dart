@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'mqtt_manager_1.dart';
+import '../../mqtt/utils/mqtt_manager_1.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key, required this.topic}) : super(key: key);

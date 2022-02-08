@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'chat_home_screen.dart';
+import 'module/chat/screens/chat_home_screen.dart';
 
 void main() {
   runApp(const MyApp());

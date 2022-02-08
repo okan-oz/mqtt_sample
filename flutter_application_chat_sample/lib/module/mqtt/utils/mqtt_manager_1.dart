@@ -3,6 +3,7 @@ import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import '../models/mqtt_setting_model.dart';
 
+
 MQTTClientManager mqttClientManager = MQTTClientManager();
 
 class MQTTClientManager {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import '../models/mqtt_setting_model.dart';
+import '../utils/mqtt_manager_1.dart';
 
-import 'models/mqtt_setting_model.dart';
-import 'mqtt/mqtt_manager_1.dart';
+
 
 class SettingMqttScreen extends StatelessWidget {
   SettingMqttScreen({Key? key}) : super(key: key);

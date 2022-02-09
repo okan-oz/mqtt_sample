@@ -86,7 +86,7 @@ class MQTTManager {
     _client!.disconnect();
   }
 
-  void subcribeTopic(String topic) {
+  void subscribeTopic(String topic) {
     if (_client == null) {
       throw Exception('You must initialize with initialize method then call the connect');
     }
@@ -101,6 +101,10 @@ class MQTTManager {
     final builder = MqttClientPayloadBuilder();
     builder.addString(message);
     _client!.publishMessage(pubTopic, MqttQos.atLeastOnce, builder.payload!);
+  }
+
+    void unSubscribeTopic(String topic) {
+    _client!.unsubscribe(topic);
   }
 
 // connection succeeded

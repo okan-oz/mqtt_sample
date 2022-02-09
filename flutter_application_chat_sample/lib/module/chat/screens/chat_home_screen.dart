@@ -95,7 +95,7 @@ class _ChatScreenState extends State<ChatHomeScreen> {
                         // mqttClientManager.subcribeTopic(currentSelectedTopic);
                         MQTTManager? manager = context.read<MQTTState>().manager;
                         debugPrint("SUBSCRIBING TO TOPIC : $currentSelectedTopic");
-                        manager!.subcribeTopic(currentSelectedTopic);
+                        manager!.subscribeTopic(currentSelectedTopic);
                         Navigator.push(
                           context,
                           MaterialPageRoute(

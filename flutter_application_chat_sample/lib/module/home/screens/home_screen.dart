@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../chat/screens/chat_screen.dart';
 import '../../mqtt/state_provider/mqtt_state.dart';
 import '../../mqtt/utils/mqtt_manager.dart';
 import '../blocs/home_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -66,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                         // mqttClientManager.subcribeTopic(currentSelectedTopic);
                         MQTTManager? manager = context.read<MQTTState>().manager;
                         debugPrint("SUBSCRIBING TO TOPIC : $currentSelectedTopic");
-                        manager!.subcribeTopic(currentSelectedTopic);
+                        manager!.subscribeTopic(currentSelectedTopic);
                         Navigator.push(
                           context,
                           MaterialPageRoute(

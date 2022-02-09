@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_chat_sample/module/auth/screens/login_screen.dart';
 import 'package:flutter_application_chat_sample/module/chat/screens/chat_home_screen.dart';
 import 'package:flutter_application_chat_sample/utils/SharedObjects.dart';
-
 import 'module/home/screens/home_screen.dart';
 import 'module/mqtt/utils/mqtt_function.dart';
 // import 'package:permission_handler/permission_handler.dart';
@@ -63,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               child: const Center(
                   child: Icon(
-                Icons.favorite,
+                Icons.water_outlined,
                 size: 80.0,
               )),
             ),

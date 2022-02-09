@@ -1,4 +1,4 @@
-import 'package:flutter_application_chat_sample/module/mqtt/utils/chat_function.dart';
+import 'package:flutter_application_chat_sample/module/chat/utils/chat_function.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../models/models/chat_message.dart';
 import 'chat_event.dart';

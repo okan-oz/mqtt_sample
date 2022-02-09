@@ -1,15 +1,13 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_application_chat_sample/core/abstract/base_functions.dart';
 import 'package:flutter_application_chat_sample/module/chat/models/models/chat_message.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
-
 import '../../../config/Constants.dart';
 import '../../../utils/SharedObjects.dart';
-import '../state_provider/mqtt_state.dart';
-import 'abstract/base_functions.dart';
-import 'mqtt_manager.dart';
+import '../../mqtt/state_provider/mqtt_state.dart';
+import '../../mqtt/utils/mqtt_manager.dart';
 
 class ChatFunction extends BaseChatFunction {
   MQTTManager? _manager;
@@ -32,7 +30,7 @@ class ChatFunction extends BaseChatFunction {
 
   @override
   Future<List<ChatMessage>> getAllMsgsFromMessagesTable(String chatId) {
-    // TODO: implement getAllMsgsFromMessagesTable
+    // OOZ burada mesajlar Local DB 'den okunur.
 
     return Future.value(<ChatMessage>[]);
   }

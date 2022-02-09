@@ -7,7 +7,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
-import '../../../config/Constants.dart';
+import '../../../config/constants.dart';
 import '../../../utils/SharedObjects.dart';
 import '../../mqtt/state_provider/mqtt_state.dart';
 import '../../mqtt/utils/mqtt_manager.dart';

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_chat_sample/config/Constants.dart';
+import 'package:flutter_application_chat_sample/config/constants.dart';
 import 'package:flutter_application_chat_sample/module/chat/blocs/chat_bloc.dart';
 import 'package:flutter_application_chat_sample/module/chat/blocs/chat_event.dart';
 import 'package:flutter_application_chat_sample/module/home/blocs/home_bloc.dart';

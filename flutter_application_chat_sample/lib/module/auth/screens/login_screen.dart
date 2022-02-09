@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../config/Constants.dart';
+import '../../../config/constants.dart';
 import '../../../utils/SharedObjects.dart';
 import '../../chat/screens/chat_home_screen.dart';
 import '../../home/screens/home_screen.dart';

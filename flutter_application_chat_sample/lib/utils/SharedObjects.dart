@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import '../config/Constants.dart';
+import '../config/constants.dart';
 
 class SharedObjects {
   static late CachedSharedPreferences prefs;

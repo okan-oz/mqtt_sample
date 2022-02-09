@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-
 import '../../../config/constants.dart';
 import '../../../utils/SharedObjects.dart';
-import '../../chat/screens/chat_home_screen.dart';
 import '../../home/screens/home_screen.dart';
 import '../models/session_model.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -15,6 +13,20 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+
+  String username = '';
+  String phoneNumber = '';
+
+  Future<bool> _login() async {
+    await SharedObjects.prefs.setBool('login', false);
+    await SharedObjects.prefs.setString(Constants.sessionUid, phoneNumber);
+    await SharedObjects.prefs.setString(Constants.sessionUsername, username);
+
+    initialSession(username: username, phoneNumber: phoneNumber);
+
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
         key: _formKey,
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 35.0, horizontal: 22.0),
+            padding: const EdgeInsets.symmetric(vertical: 35.0, horizontal: 22.0),
             child: ListView(
               children: <Widget>[
                 Column(
@@ -30,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: <Widget>[
                     Column(
                       children: <Widget>[
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         TextFormField(
                           maxLines: 1,
                           initialValue: 'username',
@@ -40,7 +52,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             label: Text('username'),
                           ),
                           onSaved: (String? value) {
-                            initialSession(username: value!);
+                            username = value!;
+                          },
+                        ),
+                        const SizedBox(height: 20.0),
+                        TextFormField(
+                          maxLines: 1,
+                          initialValue: '905555555555',
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Enter your phone number',
+                            label: Text('Phone Number'),
+                          ),
+                          onSaved: (String? value) {
+                            phoneNumber = value!;
                           },
                         ),
                       ],
@@ -56,11 +81,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       onPressed: () async {
                         _formKey.currentState!.save();
-                        await SharedObjects.prefs.setBool('login', false);
-                        await SharedObjects.prefs.setString(Constants.sessionUid, currentSession.username);
-                        SharedObjects.prefs.setString(Constants.sessionUsername, currentSession.username);
-
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                       await _login();
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
                       },
                     ),
                   ],

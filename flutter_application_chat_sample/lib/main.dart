@@ -1,154 +1,80 @@
 import 'package:flutter/material.dart';
-import 'module/chat/screens/chat_home_screen.dart';
+import 'package:flutter_application_chat_sample/splashscreen.dart';
+import 'package:flutter_application_chat_sample/utils/SharedObjects.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'module/chat/blocs/chat_bloc.dart';
+import 'module/home/blocs/home_bloc.dart';
+import 'module/mqtt/state_provider/mqtt_state.dart';
 
-void main() {
-  runApp(const MyApp());
+// void main() {
+//   runApp(const MyApp());
+// }
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedObjects.prefs = await CachedSharedPreferences.getInstance();
+  runApp(MultiBlocProvider(
+    providers: [
+      // BlocProvider<ContactsBloc>(
+      //   create: (context) => ContactsBloc(),
+      // ),
+      BlocProvider<ChatBloc>(
+        create: (context) => ChatBloc(),
+      ),
+      BlocProvider<HomeBloc>(
+        create: (context) => HomeBloc(),
+      ),
+      // BlocProvider<AddFriendsBloc>(
+      //   create: (context) => AddFriendsBloc(),
+      // ),
+      // BlocProvider<TimerBloc>(
+      //   create: (context) => TimerBloc(),
+      // )
+    ],
+    child: MyApp(),
+  ));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+//   // This widget is the root of your application.
+//   @override
+//   Widget build(BuildContext context) {
+
+//     return MaterialApp(
+//       title: 'Flutter Demo',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: ChatHomeScreen(),
+//     );
+//   }
+// }
+
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-  
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<MQTTState>(create: (context) => MQTTState()),
+        // ChangeNotifierProvider<NumberState>(
+        //   create: (context) => NumberState(),
+        // ),
+        // ChangeNotifierProvider<ProfilePicUrlState>(
+        //     create: (context) => ProfilePicUrlState()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: '',
+        theme: ThemeData(
+          primaryColor: Colors.white,
+          primarySwatch: Colors.blueGrey,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: const SplashScreen(),
       ),
-      home: ChatHomeScreen(),
     );
   }
 }
-
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-//   final String title;
-
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-//   SendMessage sendMessage = SendMessage();
-//   late MQTTManager mqttManager;
-//   bool isConnectionOpen = false;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(widget.title),
-//       ),
-//       body: Container(
-//           padding: const EdgeInsets.all(1.0),
-//           child: Form(
-//             key: _formKey,
-//             child: ListView(
-//               children: <Widget>[
-//                 TextFormField(
-//                   keyboardType: TextInputType.text, // Use email input type for emails.
-//                   decoration: const InputDecoration(hintText: ',Topic', labelText: 'Topic'),
-//                   maxLines: 1,
-//                   minLines: 1,
-//                   initialValue: 'test/topic1',
-//                   onSaved: (String? value) {
-//                     sendMessage.topic = value!;
-//                   },
-//                 ),
-//                 TextFormField(
-//                   keyboardType: TextInputType.text, // Use email input type for emails.
-//                   decoration: const InputDecoration(hintText: ',Received Message ', labelText: 'Received Message'),
-//                 ),
-//                 TextFormField(
-//                   decoration: const InputDecoration(hintText: 'Send', labelText: 'Enter message'),
-//                   onSaved: (String? value) {
-//                     sendMessage.data = value!;
-//                   },
-//                 ),
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: [
-//                     Expanded(
-//                       flex: 1,
-//                       child: Container(
-//                         child: TextButton(
-//                           child: const Text(
-//                             'Open Connection',
-//                             style: TextStyle(color: Colors.green),
-//                           ),
-//                           onPressed: () async {
-//                             await openConnection();
-//                           },
-//                         ),
-//                       ),
-//                     ),
-//                     Expanded(
-//                       flex: 1,
-//                       child: Container(
-//                         child: IconButton(
-//                           iconSize: 40,
-//                           icon: Icon(
-//                             Icons.send_rounded,
-//                             color: Colors.blue.shade500,
-//                           ),
-//                           onPressed: () {
-//                             send();
-//                           },
-//                         ),
-//                       ),
-//                     ),
-//                   ],
-//                 )
-//               ],
-//             ),
-//           )),
-//     );
-//   }
-
-//   void send() {
-//     _formKey.currentState!.save(); // Save our form now.
-//     const pubTopic = 'topic/test_';
-//     final builder = MqttClientPayloadBuilder();
-//     builder.addString(sendMessage.data!);
-//     client.publishMessage(pubTopic, MqttQos.atLeastOnce, builder.payload!);
-//   }
-
-//   late MqttServerClient client;
-//   Future<void> openConnection() async {
-//     Navigator.push(
-//       context,
-//       MaterialPageRoute(builder: (context) => SettingMqttScreen()),
-//     );
-
-//     // client = await connect();
-
-//     // setState(() {
-//     //   isConnectionOpen = client.connectionStatus!.state == MqttConnectionState.connected;
-//     // });
-
-//     // client.subscribe("topic/test_", MqttQos.atLeastOnce);
-
-//     // const pubTopic = 'topic/test_';
-//     // final builder = MqttClientPayloadBuilder();
-//     // builder.addString('Hello MQTT');
-//     // client.publishMessage(pubTopic, MqttQos.atLeastOnce, builder.payload!);
-//   }
-
-//   void subcribe() {
-//     bool isConnectionOpenNow = mqttManager.IsActiveConnectionStatus();
-//     if (!isConnectionOpenNow) {
-//       setState(() {
-//         isConnectionOpen = false;
-//       });
-
-//       return;
-//     }
-//     _formKey.currentState!.save();
-//     mqttManager.subcribeTopic(sendMessage.topic!);
-//   }
-// }

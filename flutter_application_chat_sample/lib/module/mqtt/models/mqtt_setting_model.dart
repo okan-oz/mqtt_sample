@@ -1,3 +1,5 @@
+import 'package:flutter/gestures.dart';
+
 class MqttSettingModel {
   MqttSettingModel({
     this.autoReconnect = true,
@@ -12,7 +14,6 @@ class MqttSettingModel {
     this.authenticatePassword = 'password',
     this.willTopic = 'willtopic',
     this.willMessage = 'Will message',
-    
   });
 
   String serverUrl = 'test.mosquitto.org';
@@ -27,4 +28,21 @@ class MqttSettingModel {
   String authenticatePassword = 'password';
   String willTopic = 'willtopic';
   String willMessage = 'Will message';
+
+  factory MqttSettingModel.test() {
+    return MqttSettingModel(
+      authenticatePassword: 'password',
+      authenticateUsername: 'username',
+      clientIdentifier: 'flutter_client',
+      keepAlivePeriod: 43200,
+      logging: true,
+      autoReconnect: true,
+      maxConnectionAttempt: 3,
+      port: 1883,
+      serverUrl: 'broker.emqx.io',
+      willMessage: 'Will message',
+      pongCount: 3,
+      willTopic: 'willtopic',
+    );
+  }
 }

@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
+import '../../chat/blocs/chat_bloc.dart';
+import '../../chat/blocs/chat_event.dart';
+import '../../home/blocs/home_bloc.dart';
 import '../models/mqtt_setting_model.dart';
 
+//MQTTManager mqttClientManager = MQTTManager();
 
-MQTTClientManager mqttClientManager = MQTTClientManager();
-
-class MQTTClientManager {
-  MQTTClientManager();
+class MQTTManager {
+  MQTTManager({this.context});
   MqttSettingModel? _mqttSettingModel;
   MqttServerClient? _client;
+  BuildContext? context;
+
+  late ChatBloc chatBloc;
+  late HomeBloc homeBloc;
 
   Future<bool> connect() async {
     await _connect();
@@ -63,6 +70,13 @@ class MQTTClientManager {
 
       debugPrint('EXAMPLE::Change notification:: topic is <${c[0].topic}>, payload is <-- $pt -->');
       debugPrint('');
+
+      //also notify the bloc that a new message is received so that it
+      // may read the last message from the local db
+      chatBloc.add(ReceivedMessageEvent(c[0].topic, pt));
+
+      // fetching the chatcards for the homePage
+      homeBloc.add(FetchHomeChatsEvent());
     });
 
     return _client!;
@@ -88,34 +102,36 @@ class MQTTClientManager {
     builder.addString(message);
     _client!.publishMessage(pubTopic, MqttQos.atLeastOnce, builder.payload!);
   }
-}
 
 // connection succeeded
-void _onConnected() {
-  debugPrint('Connected');
-}
+  void _onConnected() {
+    debugPrint('Connected');
+    chatBloc = BlocProvider.of<ChatBloc>(context!);
+    homeBloc = BlocProvider.of<HomeBloc>(context!);
+  }
 
 // unconnected
-void _onDisconnected() {
-  debugPrint('Disconnected');
-}
+  void _onDisconnected() {
+    debugPrint('Disconnected');
+  }
 
 // subscribe to topic succeeded
-void _onSubscribed(String topic) {
-  debugPrint('Subscribed topic: $topic');
-}
+  void _onSubscribed(String topic) {
+    debugPrint('Subscribed topic: $topic');
+  }
 
 // subscribe to topic failed
-void _onSubscribeFail(String topic) {
-  debugPrint('Failed to subscribe $topic');
-}
+  void _onSubscribeFail(String topic) {
+    debugPrint('Failed to subscribe $topic');
+  }
 
 // unsubscribe succeeded
-void _onUnsubscribed(String? topic) {
-  debugPrint('Unsubscribed topic: $topic');
-}
+  void _onUnsubscribed(String? topic) {
+    debugPrint('Unsubscribed topic: $topic');
+  }
 
 // PING response received
-void _pong() {
-  debugPrint('Ping response client callback invoked');
+  void _pong() {
+    debugPrint('Ping response client callback invoked');
+  }
 }

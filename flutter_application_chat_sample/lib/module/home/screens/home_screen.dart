@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_chat_sample/module/mqtt/screens/settings_mqtt_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../chat/screens/chat_screen.dart';
 import '../../mqtt/state_provider/mqtt_state.dart';
-import 'chat_screen.dart';
 import '../../mqtt/utils/mqtt_manager.dart';
+import '../blocs/home_bloc.dart';
 
-class ChatHomeScreen extends StatefulWidget {
-  ChatHomeScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<ChatHomeScreen> createState() => _ChatScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _ChatScreenState extends State<ChatHomeScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
+  late HomeBloc homeBloc;
+  @override
+  void initState() {
+    WidgetsBinding.instance?.addObserver(this);
+    homeBloc = BlocProvider.of<HomeBloc>(context);
+    super.initState();
+    homeBloc.add(ConnectToServerEvent(context));
+  }
+
   String currentSelectedTopic = '';
-  bool isConnectionActive = false;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,44 +38,6 @@ class _ChatScreenState extends State<ChatHomeScreen> {
             key: _formKey,
             child: ListView(
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    isConnectionActive == true
-                        ? Icon(
-                            Icons.connected_tv,
-                            color: Colors.green.shade600,
-                            size: 40.0,
-                          )
-                        : Icon(
-                            Icons.connected_tv,
-                            color: Colors.red.shade600,
-                          ),
-                    // const SizedBox(
-                    //   width: 10,
-                    // ),
-                    // TextButton(
-                    //   child: const Text(
-                    //     'Open Connection',
-                    //   ),
-                    //   onPressed: () {},
-                    // ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    TextButton(
-                      child: const Text(
-                        'Connection Settings',
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SettingMqttScreen()),
-                        );
-                      },
-                    ),
-                  ],
-                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -107,7 +78,7 @@ class _ChatScreenState extends State<ChatHomeScreen> {
                       icon: const Icon(
                         Icons.send_rounded,
                         size: 30,
-                        color: Colors.red,
+                        color: Colors.blue,
                       ),
                     ),
                   ],
@@ -116,5 +87,22 @@ class _ChatScreenState extends State<ChatHomeScreen> {
             ),
           )),
     );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.paused) {
+      homeBloc.add(DisconnectEvent());
+    }
+    if (state == AppLifecycleState.resumed) {
+      homeBloc.add(ConnectToServerEvent(context));
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
   }
 }

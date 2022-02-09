@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/mqtt_setting_model.dart';
-import '../utils/mqtt_manager_1.dart';
-
-
+import '../utils/mqtt_manager.dart';
 
 class SettingMqttScreen extends StatelessWidget {
   SettingMqttScreen({Key? key}) : super(key: key);
@@ -154,7 +152,7 @@ class SettingMqttScreen extends StatelessWidget {
   Future<void> connect() async {
     _formKey.currentState!.save();
 
-    mqttClientManager.initialize(mqttSettings);
-    await mqttClientManager.connect();
+    // mqttClientManager.initialize(mqttSettings);
+    // await mqttClientManager.connect();
   }
 }

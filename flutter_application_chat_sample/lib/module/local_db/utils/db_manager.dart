@@ -1,4 +1,4 @@
-
+import 'package:flutter/rendering.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -9,7 +9,7 @@ class DBManager {
 
   static final DBManager db = DBManager._();
 
-    Database? _database;
+  Database? _database;
 
   // final String contactsTable = "Contacts";
   final String messagesTable = "Messages";
@@ -55,8 +55,7 @@ class DBManager {
             "$timeColumn INTEGER, $msgStatusColumn INTEGER)");
 
         // 3. for storing the last message to show in the home screen in the chat cards
-        await db.execute(
-            "CREATE TABLE $chatsTable ($phoneNumberColumn TEXT PRIMARY KEY, $nameColumn TEXT,"
+        await db.execute("CREATE TABLE $chatsTable ($phoneNumberColumn TEXT PRIMARY KEY, $nameColumn TEXT,"
             "$chatIdColumn TEXT, $usernameColumn TEXT, $photoUrlColumn TEXT, $isContactColumn INTEGER, $blockStatusColumn INTEGER,"
             " $msgColumn TEXT, $msgTypeColumn TEXT, "
             "$timeColumn INTEGER)");
@@ -64,22 +63,19 @@ class DBManager {
     );
   }
 
-  Future<void> updateMessageToChatTable(
-      String chatId, String newMsg, String msgType, int currTime) async {
+  Future<void> updateMessageToChatTable(String chatId, String newMsg, String msgType, int currTime) async {
     final Database db = await database;
 
     int numOfUpdates = await db.rawUpdate(
-        "UPDATE $chatsTable SET $msgColumn = ?, $timeColumn = ?, $msgTypeColumn = ? WHERE $chatIdColumn = ?",
-        [newMsg, currTime, msgType, chatId]);
+        "UPDATE $chatsTable SET $msgColumn = ?, $timeColumn = ?, $msgTypeColumn = ? WHERE $chatIdColumn = ?", [newMsg, currTime, msgType, chatId]);
 
     print("$numOfUpdates rows were changed in Chats Table");
   }
 
-  Future<void> addNewMessageToMessagesTable(String chatId, String newMsg,
-      String msgType, int currTime, int msgStatus) async {
+  Future<void> addNewMessageToMessagesTable(String chatId, String newMsg, String msgType, int currTime, int msgStatus) async {
     final Database db = await database;
 
-    await db.insert(
+    int result = await db.insert(
       messagesTable,
       {
         chatIdColumn: chatId,
@@ -90,21 +86,15 @@ class DBManager {
       },
       conflictAlgorithm: ConflictAlgorithm.ignore,
     );
+
+    debugPrint('Insert db resul $result');
   }
 
   Future<ChatMessage> readMessageFromChatTable(String chatId) async {
     final Database db = await database;
 
     List<Map<String, dynamic>> res = await db.query(chatsTable,
-        columns: [
-          msgColumn,
-          msgTypeColumn,
-          timeColumn,
-          chatIdColumn,
-          msgStatusColumn
-        ],
-        where: "$chatIdColumn = ?",
-        whereArgs: [chatId]);
+        columns: [msgColumn, msgTypeColumn, timeColumn, chatIdColumn, msgStatusColumn], where: "$chatIdColumn = ?", whereArgs: [chatId]);
 
     ChatMessage chatMessage = ChatMessage.fromMap(res[0]);
 
@@ -112,12 +102,10 @@ class DBManager {
     return chatMessage;
   }
 
-  Future<List<ChatMessage>> readAllMessagesfromMessagesTable(
-      String chatId) async {
+  Future<List<ChatMessage>> readAllMessagesfromMessagesTable(String chatId) async {
     final Database db = await database;
 
-    var res = await db
-        .query(messagesTable, where: "$chatIdColumn = ?", whereArgs: [chatId]);
+    var res = await db.query(messagesTable, where: "$chatIdColumn = ?", whereArgs: [chatId]);
 
     return res.map((e) => ChatMessage.fromMap(e)).toList();
   }
@@ -132,8 +120,7 @@ class DBManager {
     return output;
   }
 
-  Future<void> updateProfilePicInChatsTable(
-      String photoUrl, String chatId) async {
+  Future<void> updateProfilePicInChatsTable(String photoUrl, String chatId) async {
     final Database db = await database;
 
     await db.rawUpdate(
@@ -147,13 +134,7 @@ class DBManager {
 
     var res = await db.query(
       chatsTable,
-      columns: [
-        phoneNumberColumn,
-        nameColumn,
-        usernameColumn,
-        photoUrlColumn,
-        chatIdColumn
-      ],
+      columns: [phoneNumberColumn, nameColumn, usernameColumn, photoUrlColumn, chatIdColumn],
       where: "$isContactColumn = ?",
       whereArgs: [1],
     );
@@ -162,8 +143,7 @@ class DBManager {
     return output;
   }
 
-  Future<void> createRow(String phoneNum, String chatId, String contactName,
-      String username, String photoUrl, int isContact) async {
+  Future<void> createRow(String phoneNum, String chatId, String contactName, String username, String photoUrl, int isContact) async {
     final Database db = await database;
 
     await db.insert(
@@ -187,8 +167,7 @@ class DBManager {
   Future<void> deleteContact(String phoneNum) async {
     final Database db = await database;
 
-    await db.delete(chatsTable,
-        where: "$phoneNumberColumn = ?", whereArgs: [phoneNum]);
+    await db.delete(chatsTable, where: "$phoneNumberColumn = ?", whereArgs: [phoneNum]);
   }
 
   Future<bool> checkIfContactExistsInDb(String phoneNumber) async {
@@ -220,10 +199,7 @@ class DBManager {
   Future<bool> isBlocked(String chatId) async {
     final Database db = await database;
 
-    var res = await db.query(chatsTable,
-        columns: [blockStatusColumn],
-        where: '$chatIdColumn = ?',
-        whereArgs: [chatId]);
+    var res = await db.query(chatsTable, columns: [blockStatusColumn], where: '$chatIdColumn = ?', whereArgs: [chatId]);
 
     return (res[0]["blockStat"] == 1 ? false : true);
   }

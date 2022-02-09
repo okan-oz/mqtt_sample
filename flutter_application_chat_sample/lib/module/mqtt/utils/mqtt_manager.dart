@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_chat_sample/module/mqtt/utils/mqtt_manager_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
@@ -65,18 +66,19 @@ class MQTTManager {
     }
 
     _client!.updates!.listen((List<MqttReceivedMessage<MqttMessage?>>? c) {
-      final recMess = c![0].payload as MqttPublishMessage;
-      final pt = MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+      // final recMess = c![0].payload as MqttPublishMessage;
+      // final pt = MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
 
-      debugPrint('EXAMPLE::Change notification:: topic is <${c[0].topic}>, payload is <-- $pt -->');
-      debugPrint('');
+      // debugPrint('EXAMPLE::Change notification:: topic is <${c[0].topic}>, payload is <-- $pt -->');
+      // debugPrint('');
 
-      //also notify the bloc that a new message is received so that it
-      // may read the last message from the local db
-      chatBloc.add(ReceivedMessageEvent(c[0].topic, pt));
+      // //also notify the bloc that a new message is received so that it
+      // // may read the last message from the local db
+      // chatBloc.add(ReceivedMessageEvent(c[0].topic, pt));
 
-      // fetching the chatcards for the homePage
-      homeBloc.add(FetchHomeChatsEvent());
+      // // fetching the chatcards for the homePage
+      // homeBloc.add(FetchHomeChatsEvent());
+      MqttManagerHelper.receivedMessageListen(c,chatBloc,homeBloc);
     });
 
     return _client!;
@@ -103,7 +105,7 @@ class MQTTManager {
     _client!.publishMessage(pubTopic, MqttQos.atLeastOnce, builder.payload!);
   }
 
-    void unSubscribeTopic(String topic) {
+  void unSubscribeTopic(String topic) {
     _client!.unsubscribe(topic);
   }
 

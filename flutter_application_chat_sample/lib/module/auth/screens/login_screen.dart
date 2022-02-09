@@ -21,8 +21,8 @@ class _LoginScreenState extends State<LoginScreen> {
     await SharedObjects.prefs.setBool('login', false);
     await SharedObjects.prefs.setString(Constants.sessionUid, phoneNumber);
     await SharedObjects.prefs.setString(Constants.sessionUsername, username);
-
-    initialSession(username: username, phoneNumber: phoneNumber);
+    await SharedObjects.prefs.setString(Constants.fullName, username);
+    initialSession(username: username, phoneNumber: phoneNumber, fullName: username);
 
     return true;
   }
@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       onPressed: () async {
                         _formKey.currentState!.save();
-                       await _login();
+                        await _login();
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
                       },
                     ),

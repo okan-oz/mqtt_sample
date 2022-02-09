@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_chat_sample/config/constants.dart';
+import 'package:flutter_application_chat_sample/utils/SharedObjects.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../chat/screens/chat_screen.dart';
 import '../../mqtt/state_provider/mqtt_state.dart';
@@ -14,6 +16,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   late HomeBloc homeBloc;
+  String currentSelectedTopic = '';
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  void setUserNameAndNameIfNull() {
+    // String? uid = SharedObjects.prefs.getString(Constants.sessionUid);
+    // String? username = SharedObjects.prefs.getString(Constants.sessionUsername);
+    // String? fullName = SharedObjects.prefs.getString(Constants.fullName);
+  }
+
   @override
   void initState() {
     WidgetsBinding.instance?.addObserver(this);
@@ -21,9 +32,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     super.initState();
     homeBloc.add(ConnectToServerEvent(context));
   }
-
-  String currentSelectedTopic = '';
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {

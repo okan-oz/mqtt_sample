@@ -44,44 +44,41 @@ class MQTTManager {
 
     _client = MqttServerClient.withPort(_mqttSettingModel!.serverUrl, _mqttSettingModel!.clientIdentifier, _mqttSettingModel!.port);
     _client!.logging(on: true);
-    _client!.onConnected = _onConnected;
-    _client!.onDisconnected = _onDisconnected;
-    _client!.onUnsubscribed = _onUnsubscribed;
-    _client!.onSubscribed = _onSubscribed;
-    _client!.onSubscribeFail = _onSubscribeFail;
-    _client!.pongCallback = _pong;
+    _setClientCallBack();
+    _client!.connectionMessage = _getMqttConnectMessage();
 
-    final connMessage = MqttConnectMessage()
-        .authenticateAs(_mqttSettingModel!.authenticateUsername, _mqttSettingModel!.authenticatePassword)
-        .withWillTopic(_mqttSettingModel!.willTopic)
-        .withWillMessage(_mqttSettingModel!.willMessage)
-        .startClean()
-        .withWillQos(MqttQos.atLeastOnce);
-    _client!.connectionMessage = connMessage;
     try {
-      await _client!.connect();
+      //await _client!.connect();
+      await _client!.connect(_mqttSettingModel!.clientIdentifier, _mqttSettingModel!.userPassword);
     } catch (e) {
       debugPrint('Exception: $e');
       _client!.disconnect();
     }
 
     _client!.updates!.listen((List<MqttReceivedMessage<MqttMessage?>>? c) {
-      // final recMess = c![0].payload as MqttPublishMessage;
-      // final pt = MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
-
-      // debugPrint('EXAMPLE::Change notification:: topic is <${c[0].topic}>, payload is <-- $pt -->');
-      // debugPrint('');
-
-      // //also notify the bloc that a new message is received so that it
-      // // may read the last message from the local db
-      // chatBloc.add(ReceivedMessageEvent(c[0].topic, pt));
-
-      // // fetching the chatcards for the homePage
-      // homeBloc.add(FetchHomeChatsEvent());
-      MqttManagerHelper.receivedMessageListen(c,chatBloc,homeBloc);
+      MqttManagerHelper.receivedMessageListen(c, chatBloc, homeBloc);
     });
 
     return _client!;
+  }
+
+  void _setClientCallBack() {
+    _client!.onConnected = _onConnected;
+    _client!.onDisconnected = _onDisconnected;
+    _client!.onUnsubscribed = _onUnsubscribed;
+    _client!.onSubscribed = _onSubscribed;
+    _client!.onSubscribeFail = _onSubscribeFail;
+    _client!.pongCallback = _pong;
+  }
+
+  MqttConnectMessage _getMqttConnectMessage() {
+    final connMessage = MqttConnectMessage()
+        .authenticateAs(_mqttSettingModel!.authenticateUsername, _mqttSettingModel!.authenticatePassword)
+        .withWillTopic(_mqttSettingModel!.willTopic)
+        .withWillMessage(_mqttSettingModel!.willMessage)
+        .startClean()
+        .withWillQos(MqttQos.atLeastOnce);
+    return connMessage;
   }
 
   void disconnect() {

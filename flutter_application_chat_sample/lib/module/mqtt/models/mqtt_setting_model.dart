@@ -14,6 +14,7 @@ class MqttSettingModel {
     this.authenticatePassword = 'password',
     this.willTopic = 'willtopic',
     this.willMessage = 'Will message',
+    this.userPassword='',
   });
 
   String serverUrl = 'test.mosquitto.org';
@@ -28,12 +29,13 @@ class MqttSettingModel {
   String authenticatePassword = 'password';
   String willTopic = 'willtopic';
   String willMessage = 'Will message';
+  String userPassword = '';
 
-  factory MqttSettingModel.test() {
+  factory MqttSettingModel.setDefault({required String username, required String userPassword}) {
     return MqttSettingModel(
       authenticatePassword: 'password',
       authenticateUsername: 'username',
-      clientIdentifier: 'flutter_client',
+      clientIdentifier: username,
       keepAlivePeriod: 43200,
       logging: true,
       autoReconnect: true,
@@ -43,6 +45,7 @@ class MqttSettingModel {
       willMessage: 'Will message',
       pongCount: 3,
       willTopic: 'willtopic',
+      userPassword:userPassword,
     );
   }
 }

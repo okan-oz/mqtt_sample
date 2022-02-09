@@ -28,7 +28,7 @@ class MQTTFunction extends BaseMQTTFunction {
         context: context,
       );
 
-      _manager!.initialize(MqttSettingModel.test());
+      _manager!.initialize(MqttSettingModel.setDefault(username: loggedInUser!, userPassword:password ));
 
       // also set the mqtt_manager to the provider
       context.read<MQTTState>().setNewManager(_manager!);

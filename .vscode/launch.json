@@ -5,14 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "flutter_application_chat_sample",
-            "cwd": "flutter_application_chat_sample",
+            "name": "flutter_mqtt_chat_sample",
+            "cwd": "flutter_mqtt_chat_sample",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "flutter_application_chat_sample (profile mode)",
-            "cwd": "flutter_application_chat_sample",
+            "name": "flutter_mqtt_chat_sample (profile mode)",
+            "cwd": "flutter_mqtt_chat_sample",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"

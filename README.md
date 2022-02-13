@@ -11,4 +11,5 @@
 <p>If you want to use it on more than one device at the same time, you should write different phone numbers. Any verification etc. won't be wanted.</p>
 
 <img width="366" alt="Screenshot 2022-02-13 at 15 24 37" src="https://user-images.githubusercontent.com/62757704/153770558-1d09abcf-775e-417e-a381-725bf517c146.png">
-![Screenshot 2022-02-13 at 22 06 33](https://user-images.githubusercontent.com/62757704/153770629-bc37fb4e-9cbd-47e3-82b9-0c5749342154.png)
+
+![Screenshot 2022-02-13 at 22 06 33](https://user-images.githubusercontent.com/62757704/153770678-d17922cc-73a0-4dae-a5c9-d3fa5d65aca7.png)

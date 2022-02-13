@@ -1,6 +1,6 @@
 # mqtt_sample
 <p>This project is sample for <B>MQTT</B>(https://mqtt.org/) with flutter.</p>
-<p>The MQTT client has been used successfully with the MQTT broker(broker.emqx.io)</p>
+<p>The <a href="https://pub.dev/packages/mqtt_client">MQTT client</a> client has been used successfully with the MQTT broker(broker.emqx.io)</p>
 <p>You can change default settings on mqtt_setting_model.dart file and  change another broker.</p>
 <p>Also you see the <B>Flutter Bloc</B> sample using for Chat Screen on this project and you can see the using of <B>sqflite</p>
 <p>Firstly login your credential .These informations are used for connection the MQTT server.</p>

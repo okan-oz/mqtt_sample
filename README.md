@@ -8,6 +8,7 @@
 <p>HomeBloc(ConnectToServerEvent) is responsible for the open the connection with MQTT.</p>
 <p>If you want to use it on more than one device at the same time, you should write different phone numbers. Any verification etc. won't want to.</p>
 <img width="379" alt="Screenshot 2022-02-13 at 15 23 32" src="https://user-images.githubusercontent.com/62757704/153769769-9f60ba42-cb4e-4a78-b79e-ecd396f98109.png">
+<p>If you want to use it on more than one device at the same time, you should write different phone numbers. Any verification etc. won't be wanted.</p>
 
 
 

@@ -10,5 +10,4 @@
 <img width="379" alt="Screenshot 2022-02-13 at 15 23 32" src="https://user-images.githubusercontent.com/62757704/153769769-9f60ba42-cb4e-4a78-b79e-ecd396f98109.png">
 <p>If you want to use it on more than one device at the same time, you should write different phone numbers. Any verification etc. won't be wanted.</p>
 
-
-
+<img width="366" alt="Screenshot 2022-02-13 at 15 24 37" src="https://user-images.githubusercontent.com/62757704/153770558-1d09abcf-775e-417e-a381-725bf517c146.png">

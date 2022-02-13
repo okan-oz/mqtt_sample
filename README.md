@@ -17,3 +17,5 @@
 <p>You can subscribe to the topic you want on this screen.</p>
 
 ![Screenshot 2022-02-13 at 21 42 22](https://user-images.githubusercontent.com/62757704/153770799-ccb8740a-9e0c-495b-97ba-8f6c054c5d06.png)
+
+You can review this file for details of mqtt operations.

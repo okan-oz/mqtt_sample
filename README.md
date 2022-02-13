@@ -3,7 +3,7 @@
 <p>The <a href="https://pub.dev/packages/mqtt_client">MQTT client</a> has been used successfully with the MQTT broker(broker.emqx.io)</p>
 <p>You can change default settings on <a href="https://github.com/okan-oz/mqtt_sample/blob/master/flutter_mqtt_chat_sample/lib/module/mqtt/models/mqtt_setting_model.dart">mqtt_setting_model.dart</a>  file and  change another broker.</p>
 <p>Also you see the state management <B>Flutter Bloc</B> and <b>Provider</b>  samples using for Chat Screen on this project and you can see the using of <B>sqflite</B></p>
-<p>Firstly login with your credential .These informations are used for connection the MQTT server.If you want to use one more </p>
+<p>Firstly login with your credential .These informations are used for connection the MQTT server.</p>
 
 <p>HomeBloc(ConnectToServerEvent) is responsible for the open the connection with MQTT.</p>
 <p>If you want to use it on more than one device at the same time, you should write different phone numbers. Any verification etc. won't want to.</p>

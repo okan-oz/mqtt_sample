@@ -15,4 +15,5 @@
 ![Screenshot 2022-02-13 at 22 06 33](https://user-images.githubusercontent.com/62757704/153770678-d17922cc-73a0-4dae-a5c9-d3fa5d65aca7.png)
 
 <p>You can subscribe to the topic you want on this screen.</p>
-![Screenshot 2022-02-13 at 21 42 22](https://user-images.githubusercontent.com/62757704/153770783-11964eba-1d55-40cf-95f8-d831a27f57c5.png)
+
+![Screenshot 2022-02-13 at 21 42 22](https://user-images.githubusercontent.com/62757704/153770799-ccb8740a-9e0c-495b-97ba-8f6c054c5d06.png)

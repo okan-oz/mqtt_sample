@@ -1,4 +1,4 @@
-# MQTT Sample 
+# MQTT Sample  with Chat
 <p>This project is sample for  <a href="https://mqtt.org/"><B>MQTT</B></a> with flutter.</p>
 
 ![Screenshot 2022-02-13 at 22 06 33](https://user-images.githubusercontent.com/62757704/153771718-9ab4a625-9e9d-49e6-a0f5-36a195d90a51.png)
